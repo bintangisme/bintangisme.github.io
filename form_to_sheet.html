@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing</title>
+</head>
+
+<body>
+    
+    <form id="isi" name="submit-to-google-sheet">
+        <h4>Bagaimana ini bekerja? Diisi ya..</h4>
+        <br>
+        <input name="nama" type="text" placeholder="Isi Nama" required>
+        <br>
+        <textarea name="quotes" id="" cols="30" rows="10" placeholder="Kata-kata hari ini?" required></textarea>
+        <br>
+        <button type="submit">Kirim</button>
+    </form>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyJBq_LTApdmVSoXtKUOfq0SitnMTfoMu5ZnE2i8CylfFktLiP0o1uB2w6VJZgfy0Tm/exec'
+        const form = document.forms['submit-to-google-sheet']
+
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => {
+                    form.reset();
+                    console.log('Success!', response)
+            })
+                .catch(error => console.error('Error!', error.message))
+        })
+    </script>
+</body>
+
+</html>
